@@ -1,0 +1,7 @@
+domain: mariadb-galera-cluster-operator.domain
+repo: mariadb-galera-cluster-operator.domain
+resources:
+- group: mariadb
+  kind: MariaDBCluster
+  version: v1
+version: "2"

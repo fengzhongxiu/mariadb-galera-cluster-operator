@@ -1,0 +1,8 @@
+apiVersion: mariadb.mariadb-galera-cluster-operator.domain/v1
+kind: MariaDBCluster
+metadata:
+  name: mariadbcluster-sample
+  namespace: default
+spec:
+  # Add fields here
+  size: 2
