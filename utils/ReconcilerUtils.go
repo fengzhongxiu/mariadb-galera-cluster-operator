@@ -190,7 +190,6 @@ func getCommandLine(cluster *v1.MariaDBCluster) string {
 	commandLineComplete += "  echo \"  docker-entrypoint.sh mysqld --wsrep-new-cluster\" >> /mnt/start-fzx/start-up.sh\n"
 	commandLineComplete += "  echo \"fi\" >> /mnt/start-fzx/start-up.sh\n"
 	commandLineComplete += "else\n"
-	//commandLineComplete += "  sleep 60s\n"
 	commandLineComplete += "  echo \"docker-entrypoint.sh mysqld\" > /mnt/start-fzx/start-up.sh\n"
 	commandLineComplete += "fi\n"
 	commandLineComplete += "chmod 777 /mnt/start-fzx/start-up.sh\n"
@@ -199,7 +198,7 @@ func getCommandLine(cluster *v1.MariaDBCluster) string {
 
 func getMariaDBClusterString(cluster *v1.MariaDBCluster) string {
 	var clusterAddress = "wsrep_cluster_address=gcomm://"
-	size := 3
+	size := *cluster.Spec.Size
 	for i := 1; i < int(size); i++ {
 		clusterAddress += "mariadbcluster-sample-" + strconv.Itoa(i) + ".mariadbcluster-sample.default.svc.cluster.local,"
 	}
@@ -215,7 +214,7 @@ func getMariaDBClusterString(cluster *v1.MariaDBCluster) string {
 	clusterCompleteString += "echo default-storage-engine=innodb >> /mnt/conf.d/MariaDBCluster.cnf\n"
 	clusterCompleteString += "echo innodb_autoinc_lock_mode=2 >> /mnt/conf.d/MariaDBCluster.cnf\n"
 	clusterCompleteString += "echo bind-address=mariadbcluster-sample-${ordinal}.mariadbcluster-sample.default.svc.cluster.local >> /mnt/conf.d/MariaDBCluster.cnf\n"
-	clusterCompleteString += "echo wsrep_slave_threads = 1 >> /mnt/conf.d/MariaDBCluster.cnf\n"
+	clusterCompleteString += "echo wsrep_slave_threads = 8 >> /mnt/conf.d/MariaDBCluster.cnf\n"
 	clusterCompleteString += "echo innodb_flush_log_at_trx_commit = 0 >> /mnt/conf.d/MariaDBCluster.cnf\n"
 
 	return clusterCompleteString
