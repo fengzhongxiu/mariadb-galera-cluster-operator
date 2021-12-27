@@ -56,7 +56,7 @@ func MutateStatefulSet(cluster *v1.MariaDBCluster, sts *appsv1.StatefulSet) {
 				ObjectMeta: metav1.ObjectMeta{
 					Name: "data",
 					Annotations: map[string]string{
-						"volume.beta.kubernetes.io/storage-class": "nginx-nfs-storage",
+						"volume.beta.kubernetes.io/storage-class": "nfs-storage",
 					},
 				},
 				Spec: corev1.PersistentVolumeClaimSpec{
